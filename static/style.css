@@ -1,7 +1,15 @@
 /* temporal styles */
-.grid {
+.grid-container {
+	display: grid;
+	width: 500px;
+	height: 500px;
+	margin: 0 auto;
 	border: 1px solid black;
-	height: 50px;
-	width: 50px;
+}
+
+.grid {
+	/* border: 1px solid black; */
+	/* height: 50px;
+	width: 50px; */
 	display: inline-block;
 }

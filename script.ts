@@ -1,4 +1,6 @@
-const gridContainer = document.getElementsByClassName('grid-container')[0];
+const gridContainer = document.getElementsByClassName(
+	'grid-container'
+)[0] as HTMLDivElement;
 const grids: HTMLDivElement[] = [];
 // resetting
 const resetButton = document.getElementsByClassName('reset-button')[0];
@@ -10,7 +12,10 @@ const formInput = document.querySelector(
 	'input[type="number"]'
 ) as HTMLInputElement;
 
-const createGrid = (quantity: number = 256) => {
+const gridSize = 500;
+
+const createGrid = (dimensions: number = 16) => {
+	const quantity = dimensions * dimensions;
 	for (let i = 0; i < quantity; i++) {
 		const grid = document.createElement('div');
 		grid.setAttribute('class', 'grid');
@@ -18,6 +23,9 @@ const createGrid = (quantity: number = 256) => {
 		grid.addEventListener('mouseover', paintGrid);
 		grids.push(grid);
 	}
+	const sizeForEveryGrid = gridSize / dimensions;
+	gridContainer.style.gridTemplateColumns = `repeat(${dimensions}, ${sizeForEveryGrid}px)`;
+	gridContainer.style.gridTemplateRows = `repeat(${dimensions}, ${sizeForEveryGrid}px)`;
 };
 
 const paintGrid = (event: MouseEvent) => {
@@ -56,7 +64,7 @@ resetForm.addEventListener('submit', (event) => {
 	const newGridSize = Number(formInput.value);
 	event.preventDefault();
 	removeGrids();
-	createGrid(newGridSize * newGridSize);
+	createGrid(newGridSize);
 	formInput.value = '';
 	resetPopUp.style.display = 'none';
 });

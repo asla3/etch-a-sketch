@@ -1,7 +1,6 @@
 const gridContainer = document.getElementsByClassName(
 	'grid-container'
 )[0] as HTMLDivElement;
-const grids: HTMLDivElement[] = [];
 // resetting
 const resetButton = document.getElementsByClassName('reset-button')[0];
 const resetPopUp = document.getElementsByClassName(
@@ -12,8 +11,6 @@ const formInput = document.querySelector(
 	'input[type="number"]'
 ) as HTMLInputElement;
 
-const gridSize = 500;
-
 const createGrid = (dimensions: number = 16) => {
 	const quantity = dimensions * dimensions;
 	for (let i = 0; i < quantity; i++) {
@@ -21,11 +18,9 @@ const createGrid = (dimensions: number = 16) => {
 		grid.setAttribute('class', 'grid');
 		gridContainer.appendChild(grid);
 		grid.addEventListener('mouseover', paintGrid);
-		grids.push(grid);
 	}
-	const sizeForEveryGrid = gridSize / dimensions;
-	gridContainer.style.gridTemplateColumns = `repeat(${dimensions}, ${sizeForEveryGrid}px)`;
-	gridContainer.style.gridTemplateRows = `repeat(${dimensions}, ${sizeForEveryGrid}px)`;
+	gridContainer.style.gridTemplateColumns = `repeat(${dimensions}, 1fr)`;
+	gridContainer.style.gridTemplateRows = `repeat(${dimensions}, 1fr)`;
 };
 
 const paintGrid = (event: MouseEvent) => {
@@ -51,10 +46,13 @@ const paintGrid = (event: MouseEvent) => {
 };
 
 const removeGrids = () => {
-	grids.forEach((grid) => {
-		grid.removeEventListener('mouseover', paintGrid);
-		grid.remove();
-	});
+	const grids = document.getElementsByClassName(
+		'grid'
+	) as HTMLCollectionOf<HTMLDivElement>;
+	for (let i = 0; i < grids.length; i++) {
+		grids[i].removeEventListener('mouseover', paintGrid);
+		grids[i].remove();
+	}
 };
 
 resetButton.addEventListener('click', () => {
